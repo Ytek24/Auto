@@ -1,7 +1,7 @@
-package order_manager;
+package backend.order_manager;
 
-import database_manager.DataBaseTaxHandler;
-import system_manager.VehicleCatalog;
+import backend.database_manager.DataBaseTaxHandler;
+import backend.system_manager.VehicleCatalog;
 
 public abstract class Order {
 

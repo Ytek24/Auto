@@ -1,4 +1,4 @@
-package vehicle_manager;
+package backend.vehicle_manager;
 
 import java.awt.*;
 import java.util.Date;

@@ -1,9 +1,10 @@
-package vehicle_manager;
+package backend.vehicle_manager;
 
 import java.awt.*;
 import java.util.Date;
 
 public abstract class Vehicle {
+
     private String owner;
     private String brand;
     private String model;

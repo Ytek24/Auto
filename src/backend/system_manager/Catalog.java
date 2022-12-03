@@ -1,4 +1,4 @@
-package system_manager;
+package backend.system_manager;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package order_manager;
+package backend.order_manager;
 
-import system_manager.VehicleCatalog;
+import backend.system_manager.VehicleCatalog;
 
 public class OrderLoanPayment extends Order {
     public OrderLoanPayment(String countryFrom, String countryTo, State state, VehicleCatalog vehicleCatalog) {
