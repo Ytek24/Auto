@@ -8,11 +8,13 @@ public class VehicleCatalog {
     private Vehicle vehicle;
     private Date postDate;
     private double price;
+    private String pathOfPic;
 
     public VehicleCatalog(Vehicle vehicle, Date postDate) {
         this.vehicle = vehicle;
         this.postDate = postDate;
         this.price = vehicle.getPrice();
+        this.pathOfPic = (vehicle.getBrand() + "_" + vehicle.getModel() + "_" + vehicle.getReleaseDate().getYear() + ".png").toLowerCase();
     }
 
     public Vehicle getVehicle() {
@@ -37,5 +39,13 @@ public class VehicleCatalog {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPathOfPic() {
+        return pathOfPic;
+    }
+
+    public void setPathOfPic(String pathOfPic) {
+        this.pathOfPic = pathOfPic;
     }
 }
