@@ -1,0 +1,4 @@
+type,owner,brand,model,releaseDate,secondHand,color,nbSeats,fiscalPower,consumption,coe2Emission,distanceTraveled,price
+Automotive,Youssef,Fiat,Panda3,2020,no,#ffffffff,5,5,5,2.1,0,15000
+Automotive,Nail,Renault,Clio5,2019,no,#7e7e7e7e,5,5,5,2.1,0,20000
+Automotive,Nail,Volkswagen,Golf8,2020,no,#00000000,5,5,5,2.1,0,22000

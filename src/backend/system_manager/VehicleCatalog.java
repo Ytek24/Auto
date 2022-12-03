@@ -14,7 +14,7 @@ public class VehicleCatalog {
         this.vehicle = vehicle;
         this.postDate = postDate;
         this.price = vehicle.getPrice();
-        this.pathOfPic = (vehicle.getBrand() + "_" + vehicle.getModel() + "_" + vehicle.getReleaseDate().getYear() + ".png").toLowerCase();
+        this.pathOfPic = (vehicle.getBrand() + "_" + vehicle.getModel() + "_" + vehicle.getReleasedDate().getYear() + ".png").toLowerCase();
     }
 
     public Vehicle getVehicle() {
@@ -48,4 +48,66 @@ public class VehicleCatalog {
     public void setPathOfPic(String pathOfPic) {
         this.pathOfPic = pathOfPic;
     }
+
+    public String getPostedDateToString()
+    {
+        return postDate.toString();
+    }
+
+    public String getOwner()
+    {
+        return vehicle.getOwner();
+    }
+
+    public String getBrand()
+    {
+        return vehicle.getBrand();
+    }
+
+    public String getModel()
+    {
+        return vehicle.getModel();
+    }
+
+    public String getReleasedDateToString()
+    {
+        return vehicle.getReleasedDate().toString();
+    }
+
+    public String getSecondHandToString()
+    {
+        return vehicle.isSecondHand() ? "Yes" : "No";
+    }
+
+    public String getColorToString()
+    {
+        return vehicle.getColor().toString();
+    }
+
+    public int getNbSeats()
+    {
+        return vehicle.getNbSeats();
+    }
+
+    public int getFiscalPower()
+    {
+        return vehicle.getFiscalPower();
+    }
+
+    public double getConsumption()
+    {
+        return vehicle.getConsumption();
+    }
+
+    public double getCo2Emission()
+    {
+        return vehicle.getCo2Emission();
+    }
+
+    public double getDistanceTraveled()
+    {
+        return vehicle.getDistanceTraveled();
+    }
+
+
 }

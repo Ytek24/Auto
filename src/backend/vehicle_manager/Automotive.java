@@ -1,6 +1,7 @@
 package backend.vehicle_manager;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
+
 import java.util.Date;
 
 public class Automotive extends FourWheels {

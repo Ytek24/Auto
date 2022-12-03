@@ -4,11 +4,15 @@ import backend.system_manager.Catalog;
 import backend.system_manager.VehicleCatalog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
 public class HomeScene extends BorderPane {
@@ -24,11 +28,14 @@ public class HomeScene extends BorderPane {
     Button rightArrowButton;
     HBox imageHBox;
 
+    VehicleDescriptionViewer vehicleDescriptionViewer;
+
+
 
 
     public HomeScene(Catalog catalog) {
-        this.screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
-        this.screenHeight = (int) Screen.getPrimary().getVisualBounds().getWidth();
+        this.screenWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
+        this.screenHeight = (int)Screen.getPrimary().getVisualBounds().getHeight();
         setPrefSize(screenWidth, screenHeight);
 
         this.catalog = catalog;
@@ -36,9 +43,21 @@ public class HomeScene extends BorderPane {
 
         this.vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
         this.leftArrowButton = new Button();
+        ImageView leftArrowIV = new ImageView(new Image("resources/arrow_ico/left_arrow.png"));
+        leftArrowIV.setFitWidth(100);
+        leftArrowIV.setFitHeight(400);
+        this.leftArrowButton.setGraphic(leftArrowIV);
         vehiclePic = new ImageView(new Image("resources/vehicle_pics/" + this.vehicleCatalog.getPathOfPic()));
         this.rightArrowButton = new Button();
+        ImageView rightArrowIV = new ImageView(new Image("resources/arrow_ico/right_arrow.png"));
+        rightArrowIV.setFitWidth(100);
+        rightArrowIV.setFitHeight(400);
+        this.rightArrowButton.setGraphic(rightArrowIV);
         this.imageHBox = new HBox();
+        imageHBox.setAlignment(Pos.CENTER);
+        imageHBox.setBackground(new Background(new BackgroundFill(Color.GREY, null, null)));
+
+        vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
 
         createCenterPane();
 
@@ -49,11 +68,7 @@ public class HomeScene extends BorderPane {
                 {
                     currentIndex-=1;
                     vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
-                    vehiclePic = new ImageView(new Image("resources/vehicle_pics/" + vehicleCatalog.getPathOfPic()));
-                    vehiclePic.setFitWidth(600);
-                    vehiclePic.setFitHeight(400);
-                    removeAllFromHBox();
-                    imageHBox.getChildren().addAll(leftArrowButton, vehiclePic, rightArrowButton);
+                    changeVehiclePic();
                 }
             }
         });
@@ -65,11 +80,7 @@ public class HomeScene extends BorderPane {
                 {
                     currentIndex+=1;
                     vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
-                    vehiclePic = new ImageView(new Image("resources/vehicle_pics/" + vehicleCatalog.getPathOfPic()));
-                    vehiclePic.setFitWidth(600);
-                    vehiclePic.setFitHeight(400);
-                    removeAllFromHBox();
-                    imageHBox.getChildren().addAll(leftArrowButton, vehiclePic, rightArrowButton);
+                    changeVehiclePic();
                 }
             }
         });
@@ -88,16 +99,21 @@ public class HomeScene extends BorderPane {
 
         imageHBox.getChildren().addAll(leftArrowButton, vehiclePic, rightArrowButton);
         setTop(menuBar);
+        setBottom(vehicleDescriptionViewer);
         setCenter(imageHBox);
         setLeft(filterBar);
     }
 
-    private void removeAllFromHBox()
+    private void changeVehiclePic()
     {
-        int size = imageHBox.getChildren().size();
-        for(int i = 0; i <  size; i++)
-        {
-            imageHBox.getChildren().remove(0);
-        }
+        int index = imageHBox.getChildren().indexOf(vehiclePic);
+        imageHBox.getChildren().remove(vehiclePic);
+        vehiclePic = new ImageView(new Image("resources/vehicle_pics/" + vehicleCatalog.getPathOfPic()));
+        vehiclePic.setFitWidth(600);
+        vehiclePic.setFitHeight(400);
+        imageHBox.getChildren().add(index, vehiclePic);
+
+        vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
+        setBottom(vehicleDescriptionViewer);
     }
 }

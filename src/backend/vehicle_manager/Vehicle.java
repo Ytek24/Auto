@@ -1,6 +1,7 @@
 package backend.vehicle_manager;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
+
 import java.util.Date;
 
 public abstract class Vehicle {
@@ -8,7 +9,7 @@ public abstract class Vehicle {
     private String owner;
     private String brand;
     private String model;
-    private Date releaseDate;
+    private Date releasedDate;
     private boolean secondHand;
     private Color color;
     private int nbSeats;
@@ -26,7 +27,7 @@ public abstract class Vehicle {
         this.owner = owner;
         this.brand = brand;
         this.model = model;
-        this.releaseDate = releaseDate;
+        this.releasedDate = releaseDate;
         this.secondHand = secondHand;
         this.color = color;
         this.nbSeats = nbSeats;
@@ -62,12 +63,12 @@ public abstract class Vehicle {
         this.model = model;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public Date getReleasedDate() {
+        return releasedDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setReleasedDate(Date releaseDate) {
+        this.releasedDate = releaseDate;
     }
 
     public boolean isSecondHand() {
@@ -140,7 +141,7 @@ public abstract class Vehicle {
                 "owner='" + owner + '\'' +
                 ",\nbrand='" + brand + '\'' +
                 ",\nmodel='" + model + '\'' +
-                ",\nreleaseDate=" + releaseDate +
+                ",\nreleaseDate=" + releasedDate +
                 ",\nsecondHand=" + secondHand +
                 ",\ncolor=" + color +
                 ",\nnbSeats=" + nbSeats +
