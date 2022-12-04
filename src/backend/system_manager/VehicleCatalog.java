@@ -6,16 +6,28 @@ import javafx.scene.paint.Color;
 import java.util.Date;
 
 public class VehicleCatalog {
+    private String catalogTitle;
     private Vehicle vehicle;
     private Date postDate;
     private double price;
     private String pathOfPic;
+    private String catalogDescription;
 
-    public VehicleCatalog(Vehicle vehicle, Date postDate) {
+    public VehicleCatalog(String catalogTitle, Vehicle vehicle, Date postDate, String catalogDescription) {
+        this.catalogTitle = catalogTitle;
         this.vehicle = vehicle;
         this.postDate = postDate;
         this.price = vehicle.getPrice();
         this.pathOfPic = (vehicle.getBrand() + "_" + vehicle.getModel() + "_" + vehicle.getReleasedDate().getYear() + ".png").toLowerCase();
+        this.catalogDescription = catalogDescription;
+    }
+
+    public String getCatalogTitle() {
+        return catalogTitle;
+    }
+
+    public void setCatalogTitle(String catalogTitle) {
+        this.catalogTitle = catalogTitle;
     }
 
     public Vehicle getVehicle() {
@@ -80,6 +92,11 @@ public class VehicleCatalog {
         return vehicle.getReleasedDate().toString();
     }
 
+    public boolean isSecondHand()
+    {
+        return vehicle.isSecondHand();
+    }
+
     public String getSecondHandToString()
     {
         return vehicle.isSecondHand() ? "Yes" : "No";
@@ -123,5 +140,13 @@ public class VehicleCatalog {
     public int getNbWheels()
     {
         return vehicle.getNbWheels();
+    }
+
+    public String getCatalogDescription() {
+        return catalogDescription;
+    }
+
+    public void setCatalogDescription(String catalogDescription) {
+        this.catalogDescription = catalogDescription;
     }
 }

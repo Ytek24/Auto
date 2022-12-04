@@ -31,17 +31,17 @@ public class DataBaseVehicleHandler {
                 {
                     try{
                         boolean firstHand;
-                        if(words[5].compareTo("no") == 0)
+                        if(words[6].compareTo("no") == 0)
                         {
                             firstHand = false;
                         }
                         else {
                             firstHand = true;
                         }
-                        catalog.addVehicleCatalog(new VehicleCatalog(new Automotive(words[1], words[2],
-                                words[3], new Date(Integer.parseInt(words[4])-1, 12, 01), firstHand, Color.web(words[6]),
-                                Integer.parseInt(words[7]), Integer.parseInt(words[8]), Double.parseDouble(words[9]),
-                                Double.parseDouble(words[10]), Double.parseDouble(words[11]), Double.parseDouble(words[12])), new Date(1000)));
+                        catalog.addVehicleCatalog(new VehicleCatalog(words[1], new Automotive(words[2], words[3],
+                                words[4], new Date(Integer.parseInt(words[5])-1, 12, 01), firstHand, Color.web(words[7]),
+                                Integer.parseInt(words[8]), Integer.parseInt(words[9]), Double.parseDouble(words[10]),
+                                Double.parseDouble(words[11]), Double.parseDouble(words[12]), Double.parseDouble(words[13])), new Date(1000), words[14]));
 
                     }catch (ClassCastException e)
                     {
@@ -52,17 +52,17 @@ public class DataBaseVehicleHandler {
                 {
                     try{
                         boolean firstHand;
-                        if(words[5].compareTo("no") == 0)
+                        if(words[6].compareTo("no") == 0)
                         {
                             firstHand = false;
                         }
                         else {
                             firstHand = true;
                         }
-                        catalog.addVehicleCatalog(new VehicleCatalog(new Scooter(words[1], words[2],
-                                words[3], new Date(Integer.parseInt(words[4])-1), firstHand, Color.web(words[6]),
-                                Integer.parseInt(words[7]), Integer.parseInt(words[8]), Double.parseDouble(words[9]),
-                                Double.parseDouble(words[10]), Double.parseDouble(words[11]), Double.parseDouble(words[12])), new Date(1000)));
+                        catalog.addVehicleCatalog(new VehicleCatalog(words[1], new Scooter(words[2], words[3],
+                                words[4], new Date(Integer.parseInt(words[5])-1, 12, 01), firstHand, Color.web(words[7]),
+                                Integer.parseInt(words[8]), Integer.parseInt(words[9]), Double.parseDouble(words[10]),
+                                Double.parseDouble(words[11]), Double.parseDouble(words[12]), Double.parseDouble(words[13])), new Date(1000), words[14]));
 
                     }catch (ClassCastException e)
                     {

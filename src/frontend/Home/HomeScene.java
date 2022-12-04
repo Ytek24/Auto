@@ -2,12 +2,14 @@ package frontend.Home;
 
 import backend.system_manager.Catalog;
 import backend.system_manager.VehicleCatalog;
+import backend.utils.FilterAndResearch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -60,7 +62,12 @@ public class HomeScene extends BorderPane {
         vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
 
         createCenterPane();
+        initButtonsActions();
+        disableOrEnableArrowButtons();
+    }
 
+    private void initButtonsActions()
+    {
         this.leftArrowButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -69,6 +76,7 @@ public class HomeScene extends BorderPane {
                     currentIndex-=1;
                     vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
                     changeVehiclePic();
+                    disableOrEnableArrowButtons();
                 }
             }
         });
@@ -81,17 +89,68 @@ public class HomeScene extends BorderPane {
                     currentIndex+=1;
                     vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
                     changeVehiclePic();
+                    disableOrEnableArrowButtons();
                 }
             }
         });
     }
 
+    private void disableOrEnableArrowButtons()
+    {
+        if(currentIndex == 0)
+        {
+            leftArrowButton.setDisable(true);
+        }
+        else
+        {
+            leftArrowButton.setDisable(false);
+        }
+
+        if (currentIndex == (catalog.getVehiclesCatalog().size()-1))
+        {
+            rightArrowButton.setDisable(true);
+        }
+        else
+        {
+            rightArrowButton.setDisable(false);
+        }
+    }
+
     private void createCenterPane()
     {
         MenuBar menuBar = new MenuBar((int)this.getPrefWidth());
-        FilterBar filterBar = new FilterBar((int)(this.getPrefHeight() - menuBar.getPrefHeight()));
+        FilterBar filterBar = new FilterBar(catalog);
         imageHBox.setCenterShape(true);
-        ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(catalog);
+        ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(filterBar);
+        filterBar.getApplyFiltersButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                resultsFilterAndReasearchViewer.initPostLabels(filterBar);
+                resultsFilterAndReasearchViewer.setContent(resultsFilterAndReasearchViewer.getFilteredPostVBox());
+                catalog = resultsFilterAndReasearchViewer.getCatalogFiltered();
+                currentIndex = catalog.getVehiclesCatalog().indexOf(vehicleCatalog);
+                if(currentIndex == -1)
+                {
+                    currentIndex = 0;
+                }
+                vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
+                changeVehiclePic();
+                disableOrEnableArrowButtons();
+
+                for(PostLabel postLabel: resultsFilterAndReasearchViewer.getPostLabels())
+                {
+                    postLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            vehicleCatalog = postLabel.getVehicleCatalog();
+                            currentIndex = catalog.getVehiclesCatalog().indexOf(vehicleCatalog);
+                            changeVehiclePic();
+                            disableOrEnableArrowButtons();
+                        }
+                    });
+                }
+            }
+        });
 
         vehiclePic.setFitWidth(600);
         vehiclePic.setFitHeight(400);
@@ -103,6 +162,7 @@ public class HomeScene extends BorderPane {
         setRight(vehicleDescriptionViewer);
         setCenter(imageHBox);
         setLeft(filterBar);
+        setBottom(resultsFilterAndReasearchViewer);
     }
 
     private void changeVehiclePic()

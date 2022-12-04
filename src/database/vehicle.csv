@@ -1,4 +1,4 @@
-type,owner,brand,model,releaseDate,secondHand,color,nbSeats,fiscalPower,consumption,coe2Emission,distanceTraveled,price
-Automotive,Youssef,Fiat,Panda3,2020,no,#ffffffff,5,5,5,2.1,0,15000
-Automotive,Nail,Renault,Clio5,2019,no,#7e7e7e7e,5,5,5,2.1,0,20000
-Automotive,Nail,Volkswagen,Golf8,2020,no,#00000000,5,5,5,2.1,0,22000
+type,title,owner,brand,model,releaseDate,secondHand,color,nbSeats,fiscalPower,consumption,coe2Emission,distanceTraveled,price,description
+Automotive,Fiat Panda 3 last model,Youssef,Fiat,Panda3,2020,no,#ffffffff,4,3,3,2.1,200000,15000,It's a good vehicle to drive in town
+Automotive,Renault Clio 5 last model,Nail,Renault,Clio5,2019,no,#7e7e7e7e,3,5,5,1.8,150000,24000,It's the best Renault technology you can find
+Automotive,Volkswagen Golf 8 last model,Nail,Volkswagen,Golf8,2020,no,#00000000,5,4,4,3.0,400000,22000,It's the best model of Volkswagen Golf
