@@ -135,6 +135,10 @@ public abstract class Vehicle {
         this.price = price;
     }
 
+    public int getNbWheels() {
+        return nbWheels;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{\n" +

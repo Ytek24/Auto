@@ -1,6 +1,7 @@
 package backend.system_manager;
 
 import backend.vehicle_manager.Vehicle;
+import javafx.scene.paint.Color;
 
 import java.util.Date;
 
@@ -69,6 +70,11 @@ public class VehicleCatalog {
         return vehicle.getModel();
     }
 
+    public Date getReleasedDate()
+    {
+        return vehicle.getReleasedDate();
+    }
+
     public String getReleasedDateToString()
     {
         return vehicle.getReleasedDate().toString();
@@ -77,6 +83,11 @@ public class VehicleCatalog {
     public String getSecondHandToString()
     {
         return vehicle.isSecondHand() ? "Yes" : "No";
+    }
+
+    public Color getColor()
+    {
+        return vehicle.getColor();
     }
 
     public String getColorToString()
@@ -109,5 +120,8 @@ public class VehicleCatalog {
         return vehicle.getDistanceTraveled();
     }
 
-
+    public int getNbWheels()
+    {
+        return vehicle.getNbWheels();
+    }
 }

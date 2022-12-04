@@ -91,6 +91,7 @@ public class HomeScene extends BorderPane {
         MenuBar menuBar = new MenuBar((int)this.getPrefWidth());
         FilterBar filterBar = new FilterBar((int)(this.getPrefHeight() - menuBar.getPrefHeight()));
         imageHBox.setCenterShape(true);
+        ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(catalog);
 
         vehiclePic.setFitWidth(600);
         vehiclePic.setFitHeight(400);
@@ -99,7 +100,7 @@ public class HomeScene extends BorderPane {
 
         imageHBox.getChildren().addAll(leftArrowButton, vehiclePic, rightArrowButton);
         setTop(menuBar);
-        setBottom(vehicleDescriptionViewer);
+        setRight(vehicleDescriptionViewer);
         setCenter(imageHBox);
         setLeft(filterBar);
     }
@@ -114,6 +115,6 @@ public class HomeScene extends BorderPane {
         imageHBox.getChildren().add(index, vehiclePic);
 
         vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
-        setBottom(vehicleDescriptionViewer);
+        setRight(vehicleDescriptionViewer);
     }
 }

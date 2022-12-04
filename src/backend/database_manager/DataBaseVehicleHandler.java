@@ -38,10 +38,6 @@ public class DataBaseVehicleHandler {
                         else {
                             firstHand = true;
                         }
-                        for(int i = 1; i<words.length; i++)
-                        {
-                            System.out.println("Le mot n°" + i + " est : " + words[i]);
-                        }
                         catalog.addVehicleCatalog(new VehicleCatalog(new Automotive(words[1], words[2],
                                 words[3], new Date(Integer.parseInt(words[4])-1, 12, 01), firstHand, Color.web(words[6]),
                                 Integer.parseInt(words[7]), Integer.parseInt(words[8]), Double.parseDouble(words[9]),
