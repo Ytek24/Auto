@@ -89,7 +89,7 @@ public class HomeScene extends BorderPane {
     private void createCenterPane()
     {
         MenuBar menuBar = new MenuBar((int)this.getPrefWidth());
-        FilterBar filterBar = new FilterBar((int)(this.getPrefHeight() - menuBar.getPrefHeight()));
+        FilterBar filterBar = new FilterBar(catalog);
         imageHBox.setCenterShape(true);
         ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(catalog);
 
