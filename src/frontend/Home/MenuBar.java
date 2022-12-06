@@ -1,15 +1,114 @@
 package frontend.Home;
 
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import backend.customer_manager.Customer;
+import backend.utils.CustomersUtil;
+import frontend.Customer.CustomerAspect;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
+
+import java.util.ArrayList;
 
 public class MenuBar extends HBox {
 
-    public MenuBar(int width) {
-        setPrefSize(width, 100);
+    private int screenWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
+
+    private CustomerAspect customerAspect = null;
+
+    private TextField customerLoginTf;
+    private Button customerLoginButton;
+    private Button customerLogoutButton;
+
+    private ImageView customerGraphic;
+    private VBox customerInfoVBox;
+
+    private Label customerIDLbl;
+    private Label customerNameLbl;
+
+    public MenuBar(ArrayList<CustomerAspect> customersAspects) {
+        setPrefSize(screenWidth, 100);
         setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+        setSpacing(10);
+        setPadding(new Insets(5));
+
+        setAlignment(Pos.CENTER_RIGHT);
+        customerLoginTf = new TextField();
+        customerLoginTf.setPromptText("Your ID");
+        customerLoginTf.setFocusTraversable(false);
+        customerLoginButton = new Button("Log in");
+        customerLogoutButton = new Button("Log out");
+        customerGraphic = new ImageView(new Image("resources/customer_pics/customer_default.png"));
+        customerGraphic.setFitWidth(100);
+        customerGraphic.setFitHeight(getPrefHeight());
+        customerInfoVBox = new VBox();
+        customerIDLbl = new Label("Default");
+        customerNameLbl = new Label("Default");
+        customerInfoVBox.getChildren().addAll(customerIDLbl, customerNameLbl);
+        notLogged();
+        customerLoginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                long customerId;
+                try {
+                    customerId = Long.parseLong(customerLoginTf.getText());
+                }catch (NumberFormatException e)
+                {
+                    customerId = -1;
+                }
+
+                if (customerId != -1)
+                {
+                    customerAspect = CustomersUtil.doesIDBelongToCustomers(Long.parseLong(customerLoginTf.getText()), customersAspects);
+                    if(customerAspect != null)
+                    {
+                        logged();
+                        setCustomerInformation();
+                    }
+                }
+            }
+        });
+
+        customerLogoutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                customerAspect = null;
+                unsetCustomerInformation();
+                notLogged();
+            }
+        });
+    }
+
+    private void logged()
+    {
+        getChildren().clear();
+        getChildren().addAll(customerInfoVBox, customerLogoutButton, customerGraphic);
+    }
+
+    private void notLogged()
+    {
+        getChildren().clear();
+        getChildren().addAll(customerLoginTf, customerLoginButton, customerGraphic);
+    }
+
+    private void setCustomerInformation(){
+        customerGraphic.setImage(new Image(customerAspect.getPathOfPic()));
+        customerIDLbl.setText(String.valueOf(customerAspect.getCustomer().getID()));
+        customerNameLbl.setText(customerAspect.getIdentifier());
+    }
+
+    private void unsetCustomerInformation()
+    {
+        customerGraphic.setImage(new Image("resources/customer_pics/customer_default.png"));
+        customerIDLbl.setText("Default");
+        customerNameLbl.setText("Default");
     }
 }

@@ -1,8 +1,10 @@
 package frontend.Home;
 
+import backend.customer_manager.Customer;
+import backend.database_manager.DataBaseCustomerHandler;
 import backend.system_manager.Catalog;
 import backend.system_manager.VehicleCatalog;
-import backend.utils.FilterAndResearch;
+import frontend.Customer.CustomerAspect;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -16,6 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
+
+import java.util.ArrayList;
 
 public class HomeScene extends BorderPane {
 
@@ -31,6 +35,8 @@ public class HomeScene extends BorderPane {
     HBox imageHBox;
 
     VehicleDescriptionViewer vehicleDescriptionViewer;
+
+    ArrayList<CustomerAspect> customersAspects;
 
 
 
@@ -60,6 +66,9 @@ public class HomeScene extends BorderPane {
         imageHBox.setBackground(new Background(new BackgroundFill(Color.GREY, null, null)));
 
         vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
+
+        customersAspects = new ArrayList<>();
+        DataBaseCustomerHandler.customerInformationFromDataBase(customersAspects);
 
         createCenterPane();
         initButtonsActions();
@@ -118,7 +127,7 @@ public class HomeScene extends BorderPane {
 
     private void createCenterPane()
     {
-        MenuBar menuBar = new MenuBar((int)this.getPrefWidth());
+        MenuBar menuBar = new MenuBar(customersAspects);
         FilterBar filterBar = new FilterBar(catalog);
         imageHBox.setCenterShape(true);
         ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(filterBar);
