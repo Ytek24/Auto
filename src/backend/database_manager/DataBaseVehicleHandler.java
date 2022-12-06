@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.Date;
 
 public class DataBaseVehicleHandler {
-    public static double vehicleDescriptionFromDataBase(Catalog catalog)
+    public static void vehicleDescriptionFromDataBase(Catalog catalog)
     {
         FileInputStream stream = null;
 
@@ -74,6 +74,5 @@ public class DataBaseVehicleHandler {
         {
             e.printStackTrace();
         }
-        return -1;
     }
 }
