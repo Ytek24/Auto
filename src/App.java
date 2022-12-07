@@ -1,5 +1,6 @@
 import backend.database_manager.DataBaseVehicleHandler;
 import backend.system_manager.Catalog;
+import frontend.Customer.CustomerScene;
 import frontend.Home.HomeScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -17,10 +18,8 @@ public class App extends Application
 {
         public void start(Stage stage) throws Exception
         {
-                Catalog catalog = new Catalog();
-                DataBaseVehicleHandler.vehicleDescriptionFromDataBase(catalog);
 
-                HomeScene homeScene = new HomeScene(catalog);
+                HomeScene homeScene = new HomeScene();
                 Scene scene = new Scene(homeScene);
                 stage.setScene(scene);
                 stage.sizeToScene();

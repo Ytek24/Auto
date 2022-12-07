@@ -2,6 +2,7 @@ package frontend.Home;
 
 import backend.customer_manager.Customer;
 import backend.database_manager.DataBaseCustomerHandler;
+import backend.database_manager.DataBaseVehicleHandler;
 import backend.system_manager.Catalog;
 import backend.system_manager.VehicleCatalog;
 import frontend.Customer.CustomerAspect;
@@ -41,12 +42,13 @@ public class HomeScene extends BorderPane {
 
 
 
-    public HomeScene(Catalog catalog) {
+    public HomeScene() {
         this.screenWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
         this.screenHeight = (int)Screen.getPrimary().getVisualBounds().getHeight();
         setPrefSize(screenWidth, screenHeight);
 
-        this.catalog = catalog;
+        catalog = new Catalog();
+        DataBaseVehicleHandler.vehicleDescriptionFromDataBase(catalog);
         this.currentIndex = 0;
 
         this.vehicleCatalog = catalog.getVehiclesCatalog().get(currentIndex);
