@@ -23,6 +23,8 @@ public class MenuBar extends HBox {
 
     private CustomerAspect customerAspect = null;
 
+    private Button backHomeButton;
+
     private TextField customerLoginTf;
     private Button customerLoginButton;
     private Button customerLogoutButton;
@@ -45,6 +47,11 @@ public class MenuBar extends HBox {
         setPadding(new Insets(5));
         setAlignment(Pos.CENTER_RIGHT);
 
+        backHomeButton = new Button("HOME");
+        backHomeButton.setPrefSize(60,60);
+        backHomeButton.setVisible(false);
+
+
         customerLoginTf = new TextField();
         customerLoginTf.setPromptText("Your ID");
         customerLoginTf.setFocusTraversable(false);
@@ -63,13 +70,13 @@ public class MenuBar extends HBox {
     public void logged()
     {
         getChildren().clear();
-        getChildren().addAll(customerInfoVBox, customerLogoutButton, customerGraphic);
+        getChildren().addAll(backHomeButton, customerInfoVBox, customerLogoutButton, customerGraphic);
     }
 
     public void notLogged()
     {
         getChildren().clear();
-        getChildren().addAll(customerLoginTf, customerLoginButton, customerGraphic);
+        getChildren().addAll(backHomeButton, customerLoginTf, customerLoginButton, customerGraphic);
     }
 
     public void setCustomerInformation(){
@@ -107,5 +114,9 @@ public class MenuBar extends HBox {
 
     public TextField getCustomerLoginTf() {
         return customerLoginTf;
+    }
+
+    public Button getBackHomeButton() {
+        return backHomeButton;
     }
 }

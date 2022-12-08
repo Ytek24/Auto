@@ -36,6 +36,7 @@ public class App extends Application
                 onBuyButtonAction(stage, order);
                 onOrderDiscardButtonAction(stage, home);
                 onOrderAcceptButtonAction(stage, customerScene, customer);
+                onBackHomeButtonAction(stage, home);
 
                 stage.setScene(home);
                 stage.setMaximized(true);
@@ -53,6 +54,7 @@ public class App extends Application
                                         homeScene.setTop(null);
                                         customerScene.setTop(customerScene.getMenuBar());
                                         customerScene.updateCustomerOrders();
+                                        customerScene.getMenuBar().getBackHomeButton().setVisible(true);
                                         stage.setScene(customer);
                                 }
                         }
@@ -98,9 +100,23 @@ public class App extends Application
                                         homeScene.setTop(null);
                                         customerScene.setTop(customerScene.getMenuBar());
                                         customerScene.updateCustomerOrders();
+                                        customerScene.getMenuBar().getBackHomeButton().setVisible(true);
                                         stage.setScene(customer);
 
                                 }
+                        }
+                });
+        }
+
+        private void onBackHomeButtonAction(Stage stage, Scene home)
+        {
+                customerScene.getMenuBar().getBackHomeButton().setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                                customerScene.setTop(null);
+                                homeScene.setTop(customerScene.getMenuBar());
+                                customerScene.getMenuBar().getBackHomeButton().setVisible(false);
+                                stage.setScene(home);
                         }
                 });
         }
