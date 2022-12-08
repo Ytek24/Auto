@@ -1,5 +1,7 @@
 package backend.utils;
 
+import backend.order_manager.Order;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -88,6 +90,18 @@ public class OrderUtil {
         {
             e.printStackTrace();
         }
+    }
+
+    public static boolean doesThisOrderBelongToThisOrderList(Order order, ArrayList<Order> orders)
+    {
+        for (Order ord : orders)
+        {
+            if (order.compareToOrder(ord))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<String> getCountriesFrom() {

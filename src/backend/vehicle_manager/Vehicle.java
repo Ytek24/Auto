@@ -157,4 +157,24 @@ public abstract class Vehicle {
                 ",\nnbWheels=" + nbWheels +
                 "\n}";
     }
+
+    public boolean compareToVehicle(Vehicle vehicle)
+    {
+        if ((this.owner.compareTo(vehicle.getOwner()) == 0) &&
+        (this.brand.compareTo(vehicle.getBrand()) == 0) &&
+                (this.model.compareTo(vehicle.getModel()) == 0) &&
+                (this.secondHand == vehicle.secondHand) &&
+                (this.color == vehicle.getColor()) &&
+                (this.nbSeats == vehicle.nbSeats) &&
+                (this.fiscalPower == vehicle.getFiscalPower()) &&
+                (this.consumption == vehicle.getConsumption()) &&
+                (this.co2Emission == vehicle.getCo2Emission()) &&
+                (this.distanceTraveled == vehicle.getDistanceTraveled()) &&
+                (this.price == vehicle.getPrice()) &&
+                (this.nbWheels == vehicle.getNbWheels()))
+        {
+            return true;
+        }
+        return false;
+    }
 }

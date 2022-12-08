@@ -15,13 +15,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 
 public class OrderScene extends BorderPane {
 
@@ -163,53 +161,58 @@ public class OrderScene extends BorderPane {
         previewButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String orderType;
-                try {
-                    orderType = orderTypeCb.getSelectionModel().getSelectedItem().toString();
-                }catch (NullPointerException e)
-                {
-                    orderType = "";
-                }
-
-                String countriesFrom;
-                try {
-                    countriesFrom = countriesFromCb.getSelectionModel().getSelectedItem().toString();
-                }catch (NullPointerException e)
-                {
-                    countriesFrom = "";
-                }
-
-                String countriesTo;
-                try {
-                    countriesTo = countriesToCb.getSelectionModel().getSelectedItem().toString();
-                }catch (NullPointerException e)
-                {
-                    countriesTo = "";
-                }
-
-                if (orderType.compareTo("Down payment") == 0)
-                {
-                    order = new OrderDownPayment(
-                            countriesFrom,
-                            countriesTo,
-                            vehicleCatalog
-                    );
-                    calculatePriceValueLbl.setText("vehicleCatalog.getPrice() + vehicleCatalog.getPrice() * getTax()");
-                    priceValueLbl.setText(vehicleCatalog.getPrice() + " + " + vehicleCatalog.getPrice() + " * " + order.getTax() + " = " + order.getCost());
-
-                }
-                else if (orderType.compareTo("Loan payment") == 0)
-                {
-                    order = new OrderLoanPayment(
-                            countriesFrom,
-                            countriesTo,
-                            vehicleCatalog
-                    );
-                    calculatePriceValueLbl.setText("1.10 * vehicleCatalog.getPrice() + vehicleCatalog.getPrice() * getTax()");
-                    priceValueLbl.setText("1.10 * " + vehicleCatalog.getPrice() + " + " + vehicleCatalog.getPrice() + " * " + order.getTax() + " = " + order.getCost());
-                }
+                setAppropriateOrder();
             }
         });
+    }
+
+    public void setAppropriateOrder()
+    {
+        String orderType;
+        try {
+            orderType = orderTypeCb.getSelectionModel().getSelectedItem().toString();
+        }catch (NullPointerException e)
+        {
+            orderType = "Empty";
+        }
+
+        String countriesFrom;
+        try {
+            countriesFrom = countriesFromCb.getSelectionModel().getSelectedItem().toString();
+        }catch (NullPointerException e)
+        {
+            countriesFrom = "Empty";
+        }
+
+        String countriesTo;
+        try {
+            countriesTo = countriesToCb.getSelectionModel().getSelectedItem().toString();
+        }catch (NullPointerException e)
+        {
+            countriesTo = "Empty";
+        }
+
+        if (orderType.compareTo("Down payment") == 0)
+        {
+            order = new OrderDownPayment(
+                    countriesFrom,
+                    countriesTo,
+                    vehicleCatalog
+            );
+            calculatePriceValueLbl.setText("vehicleCatalog.getPrice() + vehicleCatalog.getPrice() * getTax()");
+            priceValueLbl.setText(vehicleCatalog.getPrice() + " + " + vehicleCatalog.getPrice() + " * " + order.getTax() + " = " + order.getCost());
+
+        }
+        else if (orderType.compareTo("Loan payment") == 0)
+        {
+            order = new OrderLoanPayment(
+                    countriesFrom,
+                    countriesTo,
+                    vehicleCatalog
+            );
+            calculatePriceValueLbl.setText("1.10 * vehicleCatalog.getPrice() + vehicleCatalog.getPrice() * getTax()");
+            priceValueLbl.setText("1.10 * " + vehicleCatalog.getPrice() + " + " + vehicleCatalog.getPrice() + " * " + order.getTax() + " = " + order.getCost());
+        }
     }
 
     public void clearAll()

@@ -69,4 +69,13 @@ public abstract class Order {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
+    public boolean compareToOrder(Order order)
+    {
+        if (vehicleCatalog.compareToVehicleCatalog(order.getVehicleCatalog()))
+        {
+            return true;
+        }
+        return false;
+    }
 }

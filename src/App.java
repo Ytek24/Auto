@@ -1,3 +1,4 @@
+import backend.utils.OrderUtil;
 import frontend.Customer.CustomerScene;
 import frontend.Home.HomeScene;
 import frontend.Order.OrderScene;
@@ -85,12 +86,21 @@ public class App extends Application
                 orderScene.getAcceptButton().setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-                                customerScene.getMenuBar().getCustomerAspect().addToOrders(orderScene.getOrder());
-                                orderScene.clearAll();
-                                homeScene.setTop(null);
-                                customerScene.setTop(customerScene.getMenuBar());
-                                customerScene.updateCustomerOrders();
-                                stage.setScene(customer);
+                                orderScene.setAppropriateOrder();
+                                if ((orderScene.getOrder() != null) &&
+                                (!OrderUtil.doesThisOrderBelongToThisOrderList(
+                                        orderScene.getOrder(),
+                                        customerScene.getMenuBar().getCustomerAspect().getOrders()
+                                )))
+                                {
+                                        customerScene.getMenuBar().getCustomerAspect().addToOrders(orderScene.getOrder());
+                                        orderScene.clearAll();
+                                        homeScene.setTop(null);
+                                        customerScene.setTop(customerScene.getMenuBar());
+                                        customerScene.updateCustomerOrders();
+                                        stage.setScene(customer);
+
+                                }
                         }
                 });
         }

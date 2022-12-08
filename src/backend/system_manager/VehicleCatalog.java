@@ -161,4 +161,16 @@ public class VehicleCatalog {
     public void setVehicleDescriptionViewer(VehicleDescriptionViewer vehicleDescriptionViewer) {
         this.vehicleDescriptionViewer = vehicleDescriptionViewer;
     }
+
+    public boolean compareToVehicleCatalog(VehicleCatalog vehicleCatalog)
+    {
+        if ((this.catalogTitle.compareTo(vehicleCatalog.getCatalogTitle()) == 0) &&
+                (this.vehicle.compareToVehicle(vehicleCatalog.getVehicle())) &&
+                (this.price == vehicleCatalog.getPrice()) &&
+                (this.catalogDescription.compareTo(vehicleCatalog.getCatalogDescription()) == 0))
+        {
+            return true;
+        }
+        return false;
+    }
 }

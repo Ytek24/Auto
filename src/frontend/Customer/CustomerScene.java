@@ -27,7 +27,6 @@ public class CustomerScene extends BorderPane {
         orderVBox.getChildren().clear();
         for(Order order: menuBar.getCustomerAspect().getOrders())
         {
-            System.out.println("Rentre");
             orderVBox.getChildren().add(new OrderItem(order));
         }
         setCenter(orderVBox);
