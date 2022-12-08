@@ -26,9 +26,6 @@ import java.util.ArrayList;
 
 public class HomeScene extends BorderPane {
 
-    private int screenWidth;
-    private int screenHeight;
-
     private Catalog catalog;
     private VehicleCatalog vehicleCatalog;
     private int currentIndex;
@@ -48,9 +45,6 @@ public class HomeScene extends BorderPane {
     private Button buyButton;
 
     public HomeScene() {
-        this.screenWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
-        this.screenHeight = (int)Screen.getPrimary().getVisualBounds().getHeight();
-        setPrefSize(screenWidth, screenHeight);
 
         catalog = new Catalog();
         DataBaseVehicleHandler.vehicleDescriptionFromDataBase(catalog);
@@ -75,7 +69,6 @@ public class HomeScene extends BorderPane {
         buyButton = new Button("BUY");
         buyButton.setDisable(true);
         buyButton.setFont(Font.font(buyButton.getFont().toString(), FontWeight.BOLD,14));
-        buyButton.setPrefSize(getPrefWidth(), 60);
         buyButton.setTextFill(Color.WHITE);
         buyButton.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
@@ -141,6 +134,8 @@ public class HomeScene extends BorderPane {
     {
         vehicleDescriptionViewer = vehicleCatalog.getVehicleDescriptionViewer();
         vehicleDescriptionViewer.setBuyButton(buyButton);
+        buyButton.setPrefSize(vehicleDescriptionViewer.getPrefWidth(), 60);
+
         customersAspects = new ArrayList<>();
         DataBaseCustomerHandler.customerInformationFromDataBase(customersAspects);
         menuBar = new MenuBar(customersAspects);

@@ -6,10 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class App extends Application
 {
+        private double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        private double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
         HomeScene homeScene ;
         CustomerScene customerScene;
         OrderScene orderScene;
@@ -19,13 +23,13 @@ public class App extends Application
 
 
                 homeScene = new HomeScene();
-                Scene home = new Scene(homeScene);
+                Scene home = new Scene(homeScene, screenWidth, screenHeight);
 
                 customerScene = new CustomerScene(homeScene);
-                Scene customer = new Scene(customerScene);
+                Scene customer = new Scene(customerScene, screenWidth, screenHeight);
 
                 orderScene = new OrderScene(homeScene, customerScene);
-                Scene order = new Scene(orderScene);
+                Scene order = new Scene(orderScene, screenWidth, screenHeight);
 
                 onCustomerImageViewClick(stage, customer);
                 onBuyButtonAction(stage, order);
@@ -33,7 +37,7 @@ public class App extends Application
                 onOrderAcceptButtonAction(stage, customerScene, customer);
 
                 stage.setScene(home);
-                stage.sizeToScene();
+                stage.setMaximized(true);
 
                 stage.show();
         }

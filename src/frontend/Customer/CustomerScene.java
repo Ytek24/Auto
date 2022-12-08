@@ -5,6 +5,7 @@ import frontend.Home.HomeScene;
 import frontend.Home.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
 public class CustomerScene extends BorderPane {
 
@@ -15,6 +16,7 @@ public class CustomerScene extends BorderPane {
 
 
     public CustomerScene(HomeScene homeScene) {
+
         this.homeScene = homeScene;
         menuBar = homeScene.getMenuBar();
         orderVBox = new VBox();

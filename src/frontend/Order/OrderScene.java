@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 
 public class OrderScene extends BorderPane {
 
@@ -67,7 +68,6 @@ public class OrderScene extends BorderPane {
 
     public OrderScene(HomeScene homeScene, CustomerScene customerScene)
     {
-        //setCenterShape(true);
 
         this.homeScene = homeScene;
         this.customerScene = customerScene;
