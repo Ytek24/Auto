@@ -7,20 +7,19 @@ public abstract class Order {
 
     private String countryFrom;
     private String countryTo;
-    private double taxe; //Maybe % create a function to apply the taxe on a price (double taxe(double price))
+    private double tax; //Maybe % create a function to apply the taxe on a price (double taxe(double price))
     private State state;
     private VehicleCatalog vehicleCatalog;
     private double cost;
 
-    public Order(String countryFrom, String countryTo, State state, VehicleCatalog vehicleCatalog) {
+    public Order(String countryFrom, String countryTo, VehicleCatalog vehicleCatalog) {
         this.countryFrom = countryFrom;
         this.countryTo = countryTo;
-        this.taxe = taxe;
-        this.state = state;
+        this.tax = tax;
+        this.state = State.IN_PROGRESS;
         this.vehicleCatalog = vehicleCatalog;
 
-        setTaxe(DataBaseTaxHandler.taxValueFromDataBase(countryFrom, countryTo));
-        System.out.println("La taxe est : " + taxe);
+        setTax(DataBaseTaxHandler.taxValueFromDataBase(countryFrom, countryTo));
     }
 
     public String getCountryFrom() {
@@ -39,12 +38,12 @@ public abstract class Order {
         this.countryTo = countryTo;
     }
 
-    public double getTaxe() {
-        return taxe;
+    public double getTax() {
+        return tax;
     }
 
-    public void setTaxe(double taxe) {
-        this.taxe = taxe;
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public State getState() {

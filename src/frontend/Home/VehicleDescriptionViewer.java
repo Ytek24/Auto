@@ -2,16 +2,31 @@ package frontend.Home;
 
 import backend.system_manager.VehicleCatalog;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-public class VehicleDescriptionViewer extends ScrollPane {
+public class VehicleDescriptionViewer extends VBox {
 
+    private ScrollPane vehicleDescriptionScrollPane;
     private VBox vehicleInformationContainer;
+    private Button buyButton;
+
+    private VehicleCatalog vehicleCatalog;
 
     public VehicleDescriptionViewer(VehicleCatalog vehicleCatalog)
     {
+        this.vehicleCatalog = vehicleCatalog;
+
+        vehicleDescriptionScrollPane = new ScrollPane();
+
         setPrefSize(226, 2000);
         vehicleInformationContainer = new VBox();
         vehicleInformationContainer.setSpacing(10);
@@ -71,7 +86,28 @@ public class VehicleDescriptionViewer extends ScrollPane {
                 colorLbl, nbSeatsLbl, fiscalPowerLbl, consumptionLbl, co2EmissionLbl,
                 distanceTraveledLbl, priceLbl, descriptionLbl);
 
-        setContent(vehicleInformationContainer);
+        vehicleDescriptionScrollPane.setContent(vehicleInformationContainer);
 
+        buyButton = new Button();
+
+        getChildren().addAll(vehicleDescriptionScrollPane, buyButton);
+
+    }
+
+    public Button getBuyButton() {
+        return buyButton;
+    }
+
+    public void setBuyButton(Button buyButton) {
+        int index = removeFromChildren(this.buyButton);
+        this.buyButton = buyButton;
+        getChildren().add(index, buyButton);
+    }
+
+    private int removeFromChildren(Node node)
+    {
+        int index = getChildren().indexOf(node);
+        getChildren().remove(node);
+        return index;
     }
 }

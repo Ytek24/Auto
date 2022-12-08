@@ -1,17 +1,20 @@
 package backend.system_manager;
 
 import backend.vehicle_manager.Vehicle;
+import frontend.Home.VehicleDescriptionViewer;
 import javafx.scene.paint.Color;
 
 import java.util.Date;
 
 public class VehicleCatalog {
+
     private String catalogTitle;
     private Vehicle vehicle;
     private Date postDate;
     private double price;
     private String pathOfPic;
     private String catalogDescription;
+    private VehicleDescriptionViewer vehicleDescriptionViewer;
 
     public VehicleCatalog(String catalogTitle, Vehicle vehicle, Date postDate, String catalogDescription) {
         this.catalogTitle = catalogTitle;
@@ -20,6 +23,7 @@ public class VehicleCatalog {
         this.price = vehicle.getPrice();
         this.pathOfPic = (vehicle.getBrand() + "_" + vehicle.getModel() + "_" + vehicle.getReleasedDate().getYear() + ".png").toLowerCase();
         this.catalogDescription = catalogDescription;
+        vehicleDescriptionViewer = null;
     }
 
     public String getCatalogTitle() {
@@ -148,5 +152,13 @@ public class VehicleCatalog {
 
     public void setCatalogDescription(String catalogDescription) {
         this.catalogDescription = catalogDescription;
+    }
+
+    public VehicleDescriptionViewer getVehicleDescriptionViewer() {
+        return vehicleDescriptionViewer;
+    }
+
+    public void setVehicleDescriptionViewer(VehicleDescriptionViewer vehicleDescriptionViewer) {
+        this.vehicleDescriptionViewer = vehicleDescriptionViewer;
     }
 }

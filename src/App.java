@@ -1,28 +1,95 @@
-import backend.database_manager.DataBaseVehicleHandler;
-import backend.system_manager.Catalog;
 import frontend.Customer.CustomerScene;
 import frontend.Home.HomeScene;
+import frontend.Order.OrderScene;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import backend.order_manager.OrderDownPayment;
-import backend.order_manager.State;
-import backend.system_manager.VehicleCatalog;
-import backend.vehicle_manager.Automotive;
-import backend.vehicle_manager.Vehicle;
-
-import java.util.Date;
 
 public class App extends Application
 {
+        HomeScene homeScene ;
+        CustomerScene customerScene;
+        OrderScene orderScene;
         public void start(Stage stage) throws Exception
         {
 
-                HomeScene homeScene = new HomeScene();
-                Scene scene = new Scene(homeScene);
-                stage.setScene(scene);
+
+
+                homeScene = new HomeScene();
+                Scene home = new Scene(homeScene);
+
+                customerScene = new CustomerScene(homeScene);
+                Scene customer = new Scene(customerScene);
+
+                orderScene = new OrderScene(homeScene, customerScene);
+                Scene order = new Scene(orderScene);
+
+                onCustomerImageViewClick(stage, customer);
+                onBuyButtonAction(stage, order);
+                onOrderDiscardButtonAction(stage, home);
+                onOrderAcceptButtonAction(stage, customerScene, customer);
+
+                stage.setScene(home);
                 stage.sizeToScene();
+
                 stage.show();
         }
+
+        private void onCustomerImageViewClick(Stage stage, Scene customer)
+        {
+                customerScene.getMenuBar().getCustomerGraphic().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                                if (homeScene.getMenuBar().getCustomerAspect() != null)
+                                {
+                                        homeScene.setTop(null);
+                                        customerScene.setTop(customerScene.getMenuBar());
+                                        customerScene.updateCustomerOrders();
+                                        stage.setScene(customer);
+                                }
+                        }
+                });
+        }
+
+        private void onBuyButtonAction(Stage stage, Scene order)
+        {
+                homeScene.getBuyButton().setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                                stage.setScene(order);
+                        }
+                });
+        }
+
+        private void onOrderDiscardButtonAction(Stage stage, Scene home)
+        {
+                orderScene.getDiscardButton().setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                                orderScene.clearAll();
+                                stage.setScene(home);
+                        }
+                });
+
+        }
+
+        private void onOrderAcceptButtonAction(Stage stage, CustomerScene customerScene, Scene customer)
+        {
+                orderScene.getAcceptButton().setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                                customerScene.getMenuBar().getCustomerAspect().addToOrders(orderScene.getOrder());
+                                orderScene.clearAll();
+                                homeScene.setTop(null);
+                                customerScene.setTop(customerScene.getMenuBar());
+                                customerScene.updateCustomerOrders();
+                                stage.setScene(customer);
+                        }
+                });
+        }
+
+
 }

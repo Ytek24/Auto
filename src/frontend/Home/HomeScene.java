@@ -1,10 +1,10 @@
 package frontend.Home;
 
-import backend.customer_manager.Customer;
 import backend.database_manager.DataBaseCustomerHandler;
 import backend.database_manager.DataBaseVehicleHandler;
 import backend.system_manager.Catalog;
 import backend.system_manager.VehicleCatalog;
+import backend.utils.CustomersUtil;
 import frontend.Customer.CustomerAspect;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +18,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 
 import java.util.ArrayList;
@@ -27,20 +29,23 @@ public class HomeScene extends BorderPane {
     private int screenWidth;
     private int screenHeight;
 
-    Catalog catalog;
-    VehicleCatalog vehicleCatalog;
-    int currentIndex;
-    Button leftArrowButton;
-    ImageView vehiclePic;
-    Button rightArrowButton;
-    HBox imageHBox;
-
-    VehicleDescriptionViewer vehicleDescriptionViewer;
-
-    ArrayList<CustomerAspect> customersAspects;
+    private Catalog catalog;
+    private VehicleCatalog vehicleCatalog;
+    private int currentIndex;
+    private Button leftArrowButton;
+    private ImageView vehiclePic;
+    private Button rightArrowButton;
+    private HBox imageHBox;
 
 
+    private ArrayList<CustomerAspect> customersAspects;
 
+    private MenuBar menuBar;
+    private VehicleDescriptionViewer vehicleDescriptionViewer;
+    private ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer;
+    private FilterBar filterBar;
+
+    private Button buyButton;
 
     public HomeScene() {
         this.screenWidth = (int)Screen.getPrimary().getVisualBounds().getWidth();
@@ -67,14 +72,19 @@ public class HomeScene extends BorderPane {
         imageHBox.setAlignment(Pos.CENTER);
         imageHBox.setBackground(new Background(new BackgroundFill(Color.GREY, null, null)));
 
-        vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
-
-        customersAspects = new ArrayList<>();
-        DataBaseCustomerHandler.customerInformationFromDataBase(customersAspects);
+        buyButton = new Button("BUY");
+        buyButton.setDisable(true);
+        buyButton.setFont(Font.font(buyButton.getFont().toString(), FontWeight.BOLD,14));
+        buyButton.setPrefSize(getPrefWidth(), 60);
+        buyButton.setTextFill(Color.WHITE);
+        buyButton.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
         createCenterPane();
         initButtonsActions();
         disableOrEnableArrowButtons();
+
+        onCustomerLoginButtonAction();
+        onCustomerLogoutButtonAction();
     }
 
     private void initButtonsActions()
@@ -129,10 +139,14 @@ public class HomeScene extends BorderPane {
 
     private void createCenterPane()
     {
-        MenuBar menuBar = new MenuBar(customersAspects);
-        FilterBar filterBar = new FilterBar(catalog);
+        vehicleDescriptionViewer = vehicleCatalog.getVehicleDescriptionViewer();
+        vehicleDescriptionViewer.setBuyButton(buyButton);
+        customersAspects = new ArrayList<>();
+        DataBaseCustomerHandler.customerInformationFromDataBase(customersAspects);
+        menuBar = new MenuBar(customersAspects);
+        filterBar = new FilterBar(catalog);
         imageHBox.setCenterShape(true);
-        ResultsFilterAndReasearchViewer resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer(filterBar);
+        resultsFilterAndReasearchViewer = new ResultsFilterAndReasearchViewer();
         filterBar.getApplyFiltersButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -185,7 +199,78 @@ public class HomeScene extends BorderPane {
         vehiclePic.setFitHeight(400);
         imageHBox.getChildren().add(index, vehiclePic);
 
-        vehicleDescriptionViewer = new VehicleDescriptionViewer(vehicleCatalog);
+        vehicleDescriptionViewer.setBuyButton(new Button());
+        vehicleDescriptionViewer = vehicleCatalog.getVehicleDescriptionViewer();
+        vehicleDescriptionViewer.setBuyButton(buyButton);
         setRight(vehicleDescriptionViewer);
+    }
+
+    private void onCustomerLoginButtonAction()
+    {
+        menuBar.getCustomerLoginButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                long customerId;
+                try {
+                    customerId = Long.parseLong(menuBar.getCustomerLoginTf().getText());
+                }catch (NumberFormatException e)
+                {
+                    customerId = -1;
+                }
+
+                if (customerId != -1)
+                {
+                    menuBar.setCustomerAspect(CustomersUtil.doesIDBelongToCustomers(customerId, customersAspects));
+                    if(menuBar.getCustomerAspect() != null)
+                    {
+                        menuBar.logged();
+                        menuBar.setCustomerInformation();
+                        vehicleDescriptionViewer.getBuyButton().setDisable(false);
+                    }
+                }
+            }
+        });
+    }
+
+    private void onCustomerLogoutButtonAction()
+    {
+        menuBar.getCustomerLogoutButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                menuBar.setCustomerAspect(null);
+                menuBar.unsetCustomerInformation();
+                menuBar.notLogged();
+                vehicleDescriptionViewer.getBuyButton().setDisable(true);
+
+            }
+        });
+    }
+
+    public ArrayList<CustomerAspect> getCustomersAspects() {
+        return customersAspects;
+    }
+
+    public VehicleCatalog getVehicleCatalog() {
+        return vehicleCatalog;
+    }
+
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public VehicleDescriptionViewer getVehicleDescriptionViewer() {
+        return vehicleDescriptionViewer;
+    }
+
+    public ResultsFilterAndReasearchViewer getResultsFilterAndReasearchViewer() {
+        return resultsFilterAndReasearchViewer;
+    }
+
+    public FilterBar getFilterBar() {
+        return filterBar;
+    }
+
+    public Button getBuyButton() {
+        return buyButton;
     }
 }

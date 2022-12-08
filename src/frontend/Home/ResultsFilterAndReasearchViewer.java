@@ -19,7 +19,7 @@ public class ResultsFilterAndReasearchViewer extends ScrollPane {
     ArrayList<PostLabel> postLabels;
     VBox filteredPostVBox;
 
-    public ResultsFilterAndReasearchViewer(FilterBar filterBar)
+    public ResultsFilterAndReasearchViewer()
     {
         setPrefSize(2000, 150);
 

@@ -34,13 +34,18 @@ public class MenuBar extends HBox {
     private Label customerIDLbl;
     private Label customerNameLbl;
 
+    ArrayList<CustomerAspect> customersAspects;
+
     public MenuBar(ArrayList<CustomerAspect> customersAspects) {
+
+        this.customersAspects = customersAspects;
+
         setPrefSize(screenWidth, 100);
         setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         setSpacing(10);
         setPadding(new Insets(5));
-
         setAlignment(Pos.CENTER_RIGHT);
+
         customerLoginTf = new TextField();
         customerLoginTf.setPromptText("Your ID");
         customerLoginTf.setFocusTraversable(false);
@@ -54,61 +59,54 @@ public class MenuBar extends HBox {
         customerNameLbl = new Label("Default");
         customerInfoVBox.getChildren().addAll(customerIDLbl, customerNameLbl);
         notLogged();
-        customerLoginButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                long customerId;
-                try {
-                    customerId = Long.parseLong(customerLoginTf.getText());
-                }catch (NumberFormatException e)
-                {
-                    customerId = -1;
-                }
-
-                if (customerId != -1)
-                {
-                    customerAspect = CustomersUtil.doesIDBelongToCustomers(Long.parseLong(customerLoginTf.getText()), customersAspects);
-                    if(customerAspect != null)
-                    {
-                        logged();
-                        setCustomerInformation();
-                    }
-                }
-            }
-        });
-
-        customerLogoutButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                customerAspect = null;
-                unsetCustomerInformation();
-                notLogged();
-            }
-        });
     }
 
-    private void logged()
+    public void logged()
     {
         getChildren().clear();
         getChildren().addAll(customerInfoVBox, customerLogoutButton, customerGraphic);
     }
 
-    private void notLogged()
+    public void notLogged()
     {
         getChildren().clear();
         getChildren().addAll(customerLoginTf, customerLoginButton, customerGraphic);
     }
 
-    private void setCustomerInformation(){
+    public void setCustomerInformation(){
         customerGraphic.setImage(new Image(customerAspect.getPathOfPic()));
         customerIDLbl.setText(String.valueOf(customerAspect.getCustomer().getID()));
         customerNameLbl.setText(customerAspect.getIdentifier());
     }
 
-    private void unsetCustomerInformation()
+    public void unsetCustomerInformation()
     {
         customerGraphic.setImage(new Image("resources/customer_pics/customer_default.png"));
         customerIDLbl.setText("Default");
         customerNameLbl.setText("Default");
+    }
+
+    public ImageView getCustomerGraphic() {
+        return customerGraphic;
+    }
+
+    public CustomerAspect getCustomerAspect() {
+        return customerAspect;
+    }
+
+    public void setCustomerAspect(CustomerAspect customerAspect) {
+        this.customerAspect = customerAspect;
+    }
+
+    public Button getCustomerLoginButton() {
+        return customerLoginButton;
+    }
+
+    public Button getCustomerLogoutButton() {
+        return customerLogoutButton;
+    }
+
+    public TextField getCustomerLoginTf() {
+        return customerLoginTf;
     }
 }
