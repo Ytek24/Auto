@@ -106,6 +106,11 @@ public class VehicleCatalog {
         return vehicle.isSecondHand() ? "Yes" : "No";
     }
 
+    public String getSecondHandToStringFR()
+    {
+        return vehicle.isSecondHand() ? "Oui" : "Non";
+    }
+
     public Color getColor()
     {
         return vehicle.getColor();

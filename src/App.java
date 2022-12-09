@@ -1,3 +1,4 @@
+import backend.document_manager.DocumentGenerator;
 import backend.utils.OrderUtil;
 import frontend.Customer.CustomerScene;
 import frontend.Home.HomeScene;
@@ -96,6 +97,18 @@ public class App extends Application
                                 )))
                                 {
                                         customerScene.getMenuBar().getCustomerAspect().addToOrders(orderScene.getOrder());
+                                        DocumentGenerator.createRegistCertif(
+                                                customerScene.getMenuBar().getCustomerAspect().getCustomer(),
+                                                orderScene.getOrder()
+                                        );
+                                        DocumentGenerator.createProtocolOfHandingOver(
+                                                customerScene.getMenuBar().getCustomerAspect().getCustomer(),
+                                                orderScene.getOrder()
+                                        );
+                                        DocumentGenerator.createOrderForm(
+                                                customerScene.getMenuBar().getCustomerAspect().getCustomer(),
+                                                orderScene.getOrder()
+                                        );
                                         orderScene.clearAll();
                                         homeScene.setTop(null);
                                         customerScene.setTop(customerScene.getMenuBar());
