@@ -19,11 +19,9 @@ public class App extends Application
         HomeScene homeScene ;
         CustomerScene customerScene;
         OrderScene orderScene;
+
         public void start(Stage stage) throws Exception
         {
-
-
-
                 homeScene = new HomeScene();
                 Scene home = new Scene(homeScene, screenWidth, screenHeight);
 
@@ -67,6 +65,8 @@ public class App extends Application
                 homeScene.getBuyButton().setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
+                                orderScene.setVehicleCatalog(homeScene.getVehicleCatalog());
+                                orderScene.updateConcernedOffer();
                                 stage.setScene(order);
                         }
                 });

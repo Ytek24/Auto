@@ -215,10 +215,15 @@ public class OrderScene extends BorderPane {
         }
     }
 
+    public void updateConcernedOffer()
+    {
+        forVehicleCatalogLbl.setText("Concerned offer: " + vehicleCatalog.getCatalogTitle());
+    }
+
     public void clearAll()
     {
         order = null;
-        calculatePriceValueLbl.setText("");
+        forVehicleCatalogLbl.setText("");
         priceValueLbl.setText("");
         orderTypeCb.getSelectionModel().clearSelection();
         countriesFromCb.getSelectionModel().clearSelection();
@@ -239,5 +244,13 @@ public class OrderScene extends BorderPane {
 
     public Order getOrder() {
         return order;
+    }
+
+    public VehicleCatalog getVehicleCatalog() {
+        return vehicleCatalog;
+    }
+
+    public void setVehicleCatalog(VehicleCatalog vehicleCatalog) {
+        this.vehicleCatalog = vehicleCatalog;
     }
 }
